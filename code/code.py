@@ -139,8 +139,8 @@ def perform_test(fldf, test_set):
 	for i,test_sample in enumerate(test_set):
 		decision = fldf.decide_class(test_sample)
 		decision_labels.append(decision)
-		# if (i+1)%10 == 0:
-		print ('DONE: {0}/{1}'.format(i+1,len(test_set)))
+		if (i+1)%100 == 0:
+			print ('DONE: {0}/{1}'.format(i+1,len(test_set)))
 	return decision_labels
 
 #############################################################
@@ -150,7 +150,7 @@ classes = []
 for i in range(10):
 	classes.append(C(i))
 
-data, labels = load_batches("../data/data_batch_", 5)
+data, labels = load_batches("../data/data_batch_", 1)
 
 # Put the train data to the corresponding class.
 for i, label in enumerate(labels):
@@ -167,9 +167,9 @@ fldf = Fisher_LDF(classes)
 
 test_data, test_labels = load_data("../data/test_batch")
 
-decision_labels = perform_test(fldf, test_data[:50])
+decision_labels = perform_test(fldf, test_data[:1000])
 
-cm = confusion_matrix(test_labels[:50], decision_labels)
+cm = confusion_matrix(test_labels[:1000], decision_labels)
 print(cm)
 
 acc, tpr, tnr, fpr, fnr =evaluation_from_cm(cm)
